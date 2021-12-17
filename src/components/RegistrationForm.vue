@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import validationMixin from './mixins/validationMixin';
+import validationMixin from '@/mixins/validationMixin';
 
 export default {
     name: 'RegistrationForm',
