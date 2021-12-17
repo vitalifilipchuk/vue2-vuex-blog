@@ -17,20 +17,29 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import Header from './components/Header'
+import { mapState, mapActions } from 'vuex'
+import usersGlobalMixin from './mixins/globalMixins/usersGlobalMixin'
+
+Vue.mixin(usersGlobalMixin);
 
 export default {
   name: 'App',
   components: {
     Header
   },
+
   data() {
     return {
       isLoggedIn: false,
       users: []
     }
   },
+
   mounted() {
+    this.getAllUsers()
+
     if (localStorage.currentLoggedUser) {
       this.isLoggedIn = true
     }
@@ -38,20 +47,25 @@ export default {
       this.users = JSON.parse(localStorage.getItem("users"))
     }
   },
+
   methods: {
+    ...mapActions('users', ['getAllUsers']),
+
     logoutUser() {
       localStorage.removeItem('currentLoggedUser')
       this.isLoggedIn = false
       this.$router.push({ name: 'Home' })
     },
+
     loginUser(name) {
       localStorage.setItem('currentLoggedUser', name)
       this.isLoggedIn = true
       this.$router.push({ name: 'Account' })
     },
+
     registerUser(user) {
-      this.users.push({name: user.name, password: user.password})
-      localStorage.setItem('users',JSON.stringify(this.users))
+      // this.users.push({name: user.name, password: user.password})
+      // localStorage.setItem('users',JSON.stringify(this.users))
       localStorage.setItem('currentLoggedUser', user.name)
       this.isLoggedIn = true
       this.$router.push({ name: 'Account' })

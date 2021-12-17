@@ -3,17 +3,17 @@
     <div class="container">
       <div 
         class="dashboard" 
-        v-if="users.length > 0"
+        v-if="getUserList.length > 0"
       >
         <div 
           class="dashboard__item" 
           :key="user.name" 
-          v-for="user in users"
+          v-for="user in getUserList"
         >
           {{ user.name }}
         </div>
       </div>
-      <div v-if="users.length === 0">
+      <div v-if="getUserList.length === 0">
         <p>Не створено жодного користувача.</p>
         <div>
           <Button 
@@ -59,17 +59,16 @@ export default {
     Modal,
     RegistrationForm
   },
-  props: {
-    users: {
-      type: Array,
-      default: []
-    }
-  },
+
   data() {
     return {
       popupActive: false
     }
   },
+
+  mounted() {
+  },
+
   methods: {
     showPopup() {
       this.popupActive = true
@@ -77,7 +76,8 @@ export default {
     closePopup() {
       this.popupActive = false
     }
-  }
+  },
+
 }
 </script>
 

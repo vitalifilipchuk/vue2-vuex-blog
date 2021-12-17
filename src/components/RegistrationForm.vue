@@ -47,6 +47,7 @@
 
 <script>
 import validationMixin from '@/mixins/validationMixin';
+import { mapActions } from 'vuex'
 
 export default {
     name: 'RegistrationForm',
@@ -60,6 +61,10 @@ export default {
         }
     },
     methods: {
+        ...mapActions(
+            'users',
+            ['addUser']
+        ),
         submitHandler() {
 
             this.errors = this.validateForm({name: this.name, password: this.password})
@@ -67,24 +72,23 @@ export default {
             if (this.errors.formIsValid) {
                 this.errors = this.checkConfirmPassword('confirmPassword', this.password, this.confirmPassword)
                 if (this.errors.formIsValid) {
-                    let usersData = JSON.parse(localStorage.getItem("users"))
 
-                    if (usersData === null) {
-                        let newUser = {name: this.name, password: this.password}
-                        this.$emit('registerUser', newUser)
+                    if (this.getUserList === null) {
+                        this.addUser({name: this.name, password: this.password})
+                        this.$emit('registerUser', {name: this.name, password: this.password})
                     }
                     else {
                         this.errors = this.checkUserExists('name', this.name)
                         if (this.errors.formIsValid) {
-                            let newUser = {name: this.name, password: this.password}
-                            this.$emit('registerUser', newUser)
+                            this.addUser({name: this.name, password: this.password})
+                            this.$emit('registerUser', {name: this.name, password: this.password})
                         }
                     }
                 }
 
             }
         }
-    }
+    },
 }
 </script>
 
