@@ -63,10 +63,11 @@ const validationMixin = {
             const formErrors = {}
             let formIsValid = true
             let usersData = JSON.parse(localStorage.getItem("users"))
-            let isValid = !!(usersData.filter(user => user.name === login).length === 0) || 'Користувач з таким логіном вже існує!'
-            if (isValid !== true) {
+            let errorTxt = 'Користувач з таким логіном вже існує!'
+            let isValid = !usersData ||  !!(usersData.filter(user => user.name === login).length === 0)
+            if (!isValid) {
                 formIsValid = false
-                formErrors[inputName] = [isValid]
+                formErrors[inputName] = [errorTxt]
             }
 
             formErrors.formIsValid = formIsValid
@@ -77,10 +78,11 @@ const validationMixin = {
             const formErrors = {}
             let formIsValid = true
             let usersData = JSON.parse(localStorage.getItem("users"))
-            let isValid = !!usersData.filter(user => user.name === login).length || 'Користувача з таким логіном не існує'
-            if (isValid !== true) {
+            let errorTxt = 'Користувача з таким логіном не існує'
+            let isValid = usersData && !!usersData.filter(user => user.name === login).length
+            if (!isValid) {
                 formIsValid = false
-                formErrors[inputName] = [isValid]
+                formErrors[inputName] = [errorTxt]
             }
 
             formErrors.formIsValid = formIsValid
@@ -92,11 +94,12 @@ const validationMixin = {
             let formIsValid = true
             let usersData = JSON.parse(localStorage.getItem("users"))
             let existingUser = usersData.filter(user => user.name === userProps.name)
-            let isValid = !!(existingUser[0].password === userProps.password) || 'Неправильно вказаний пароль'
-            console.log(isValid)
-            if (isValid !== true) {
+            let errorTxt = 'Неправильно вказаний пароль'
+            let isValid = !!(existingUser[0].password === userProps.password)
+
+            if (!isValid) {
                 formIsValid = false
-                formErrors[inputName] = [isValid]
+                formErrors[inputName] = [errorTxt]
             }
 
             formErrors.formIsValid = formIsValid

@@ -31,12 +31,14 @@ export default {
     components: {
         Button
     },
+
     props: {
         isLoggedIn: {
             type: Boolean,
             default: false
         }
     },
+
     methods: {
         goBack() {
             this.$router.back()
