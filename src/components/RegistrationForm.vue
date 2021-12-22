@@ -93,41 +93,5 @@ export default {
 </script>
 
 <style>
-.form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.form__row {
-    max-width: 420px;
-    width: 100%;
-    margin-bottom: 20px;
-}
-.form__row input {
-    width: 100%;
-    background: #fefefe;
-    line-height: 24px;
-    font-size: 16px;
-    border-radius: 7px;
-    padding: 18px 23px 18px 16px;
-    height: 60px;
-    border: 1px solid #c3c3c3;
-    box-shadow: 0 2px 20px rgba(0,114,162,.07);
-}
 
-input.error {
-  border: 1px solid red;
-}
-
-.form__row input.error {
-  border: 1px solid red;
-}
-
-.form__errors {
-    color: red;
-}
-
-.form .btn {
-    max-width: 320px;
-}
 </style>

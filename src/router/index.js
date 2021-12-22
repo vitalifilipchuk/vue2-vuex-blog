@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 import Home from '../views/Home.vue'
 
 import auth from './middleware/auth'
+import postExists from './middleware/postExists'
+import middlewarePipeline from './middlewarePipeline'
 
 Vue.use(VueRouter)
 
@@ -23,11 +26,32 @@ const routes = [
     component: () => import('../views/Registration.vue')
   },
   {
+    path: '/blog',
+    name: 'Blog',
+    component: () => import('../views/blog/Blog.vue')
+  },
+  {
+    path: '/blog/create',
+    name: 'Add post',
+    component: () => import('../views/blog/addPost.vue'),
+    meta: {
+      middleware: [auth],
+    }
+  },
+  {
+    path: '/blog/:postId',
+    name: 'Post',
+    component: () => import('../views/blog/Post.vue'),
+    meta: {
+      middleware: [auth, postExists]
+    }
+  },
+  {
     path: '/account',
     name: 'Account',
     component: () => import('../views/MyAccount.vue'),
     meta: {
-      middleware: auth,
+      middleware: [auth],
     }
   },
   {
@@ -51,13 +75,17 @@ router.beforeEach((to, from, next) => {
   if (!to.meta.middleware) {
       return next()
   }
+  
   const middleware = to.meta.middleware
   const context = {
+      to,
+      from,
       next,
-      router
+      store
   }
-  return middleware({
-      ...context
+  return middleware[0]({
+      ...context,
+      next: middlewarePipeline(context, middleware, 1)
   })
 })
 

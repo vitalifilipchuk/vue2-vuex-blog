@@ -42,7 +42,8 @@ export default {
     background-color: darkred;
 }
 
-.login-btn {
+.login-btn,
+.confirm-btn {
     background-color: green;
 }
 </style>

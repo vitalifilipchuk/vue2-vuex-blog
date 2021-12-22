@@ -1,6 +1,8 @@
-export default function auth({ next, router }) {
+export default function auth({ next, store }) {
     if (!localStorage.getItem('currentLoggedUser')) {
-        return router.push({ name: 'Login' });
+        return next({
+            name: 'Login'
+        })
     }
 
     return next();
