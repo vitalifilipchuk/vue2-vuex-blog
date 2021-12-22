@@ -3,6 +3,8 @@
         <div class="container">
             <div class="header__inner">
                 <router-link to="/">Головна</router-link>
+                <router-link to="/blog">Блог</router-link>
+                <router-link to="/blog/create">Додати статтю</router-link>
                 <router-link v-if="!isLoggedIn" to="/login">Увійти</router-link>
                 <router-link v-if="!isLoggedIn" to="/registration">Реєстрація</router-link>
                 <router-link v-if="isLoggedIn" to="/account">Особистий кабінет</router-link>
