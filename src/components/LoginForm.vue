@@ -37,6 +37,7 @@
 
 <script>
 import validationMixin from '@/mixins/validationMixin'
+import { mapActions } from 'vuex'
 
 export default {
     name: 'LoginForm',
@@ -49,6 +50,10 @@ export default {
         }
     },
     methods: {
+        ...mapActions(
+            'users',
+            ['login']
+        ),
         submitHandler() {
             this.errors = this.validateForm({name: this.name, password: this.password})
 
@@ -57,7 +62,8 @@ export default {
                 if (this.errors.formIsValid) {
                     this.errors = this.checkUserPassword('password', {name: this.name, password: this.password})
                     if (this.errors.formIsValid) {
-                        this.$emit('loginUser', this.name)
+                        this.login(this.name)
+                        this.$router.push({ name: 'Account' })
                     }
                 }
             }

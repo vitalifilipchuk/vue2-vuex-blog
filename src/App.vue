@@ -6,11 +6,7 @@
      />
     <div class="page__content">
       <router-view 
-        :users="users" 
-        :isLoggedIn="isLoggedIn" 
-        @loginUser="loginUser" 
-        @registerUser="registerUser" 
-        @logoutUser="logoutUser"  
+         
       />
     </div>
   </div>
@@ -32,44 +28,16 @@ export default {
 
   data() {
     return {
-      isLoggedIn: false,
-      users: []
+
     }
   },
 
   mounted() {
     this.getAllUsers()
-
-    if (localStorage.currentLoggedUser) {
-      this.isLoggedIn = true
-    }
-    if (localStorage.users) {
-      this.users = JSON.parse(localStorage.getItem("users"))
-    }
   },
 
   methods: {
     ...mapActions('users', ['getAllUsers']),
-
-    logoutUser() {
-      localStorage.removeItem('currentLoggedUser')
-      this.isLoggedIn = false
-      this.$router.push({ name: 'Home' })
-    },
-
-    loginUser(name) {
-      localStorage.setItem('currentLoggedUser', name)
-      this.isLoggedIn = true
-      this.$router.push({ name: 'Account' })
-    },
-
-    registerUser(user) {
-      // this.users.push({name: user.name, password: user.password})
-      // localStorage.setItem('users',JSON.stringify(this.users))
-      localStorage.setItem('currentLoggedUser', user.name)
-      this.isLoggedIn = true
-      this.$router.push({ name: 'Account' })
-    }
   }
 }
 </script>

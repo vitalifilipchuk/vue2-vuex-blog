@@ -9,10 +9,12 @@ export default {
         let users = this.getUsers()
         users.push({name: user.name, password: user.password})
         localStorage.setItem('users',JSON.stringify(users))
+    },
+    setCurrentUser(username) {
+        localStorage.setItem('currentLoggedUser', username)
+        return username
+    },
+    unsetCurrentUser() {
+        localStorage.removeItem('currentLoggedUser')
     }
-    // getLoggedUser() {
-    //     if (localStorage.currentLoggedUser) {
-    //         return 
-    //     }
-    // }
 }

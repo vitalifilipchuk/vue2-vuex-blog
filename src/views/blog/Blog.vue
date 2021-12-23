@@ -17,12 +17,6 @@ export default {
   components: {
     postsList
   },
-  props: {
-    isLoggedIn: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
     }

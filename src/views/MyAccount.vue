@@ -6,7 +6,7 @@
           class="logout-btn" 
           :text="'Вийти'" 
           v-if="isLoggedIn" 
-          @click.native="$emit('logoutUser')"   
+          @click.native="logoutUser"   
       />
     </div>
   </div>
@@ -21,11 +21,5 @@ export default {
   components: {
     Button
   },
-  props: {
-    isLoggedIn: {
-      type: Boolean,
-      default: false
-    }
-  }
 }
 </script>

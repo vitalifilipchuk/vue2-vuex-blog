@@ -6,5 +6,5 @@ export default function postExists({ next, to, store }) {
         })
     }
 
-    return next();
+    return next()
 }
