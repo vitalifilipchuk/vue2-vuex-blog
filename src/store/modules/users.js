@@ -1,12 +1,20 @@
 import usersAPI from "../../api/usersAPI"
 
 const state = {
-    users: []
+    users: [],
+    currentUser: '',
+    isLoggedIn: false
 }
  
 const getters = {
     usersList: (state) => {
         return state.users
+    },
+    getCurrentUser: (state) => {
+        return state.currentUser
+    },
+    getAuthStatus: (state) => {
+        return state.isLoggedIn
     }
 }
 
@@ -16,6 +24,14 @@ const mutations = {
     },
     setUsers: (state, users) => {
         state.users = users
+    },
+    loginUser: (state, username) => {
+        state.currentUser = username
+        state.isLoggedIn = true
+    },
+    logoutUser: (state) => {
+        state.currentUser = ''
+        state.isLoggedIn = false
     }
 }
 
@@ -27,6 +43,14 @@ const actions = {
     addUser({commit}, user) {
         usersAPI.addUser(user)
         commit("addNewUser", user)
+    },
+    login({commit}, username) {
+        const response = usersAPI.setCurrentUser(username)
+        commit('loginUser', response)
+    },
+    logout({commit}) {
+        usersAPI.unsetCurrentUser()
+        commit('logoutUser')
     }
 }
 

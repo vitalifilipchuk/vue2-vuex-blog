@@ -11,7 +11,10 @@ function middlewarePipeline (context, middleware, index) {
     Если же nextMiddleware есть, то передаем в него контекст и переменную nextPipeline, в которой просто увеличиваем index на 1, тем самым указавая функции запускать следующий middleware.
     В итоге мы возвращаем middleware с перезаписанным next, в котором у нас лежит функция middlewarePipeline. Таким образом с помощью рекурсии мы пройдем все middleware в стеке.
      */
-    return () => {
+    return param => {
+        //если next передался с параметром (например: next({ name: 'Login'})), то прерываем выполнение pipeline 
+        if (param) return context.next(param)
+
         const nextPipeline = middlewarePipeline(
             context, middleware, index + 1
         )

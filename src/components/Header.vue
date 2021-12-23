@@ -13,7 +13,7 @@
                     :text="'Вийти'" 
                     :isLoggedIn="isLoggedIn"
                     v-if="isLoggedIn" 
-                    @click.native="$emit('logoutUser')"   
+                    @click.native="logoutUser"   
                 />
                 <Button 
                     class="back-btn" 
@@ -32,13 +32,6 @@ export default {
     name: 'Header',
     components: {
         Button
-    },
-
-    props: {
-        isLoggedIn: {
-            type: Boolean,
-            default: false
-        }
     },
 
     methods: {

@@ -19,12 +19,6 @@ export default {
   components: {
     addPostForm
   },
-  props: {
-    isLoggedIn: {
-      type: Boolean,
-      default: false
-    }
-  },
   data() {
     return {
     }

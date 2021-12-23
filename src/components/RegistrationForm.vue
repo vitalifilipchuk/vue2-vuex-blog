@@ -63,7 +63,10 @@ export default {
     methods: {
         ...mapActions(
             'users',
-            ['addUser']
+            [
+                'addUser',
+                'login'
+            ]
         ),
         submitHandler() {
 
@@ -75,13 +78,15 @@ export default {
 
                     if (this.getUserList === null) {
                         this.addUser({name: this.name, password: this.password})
-                        this.$emit('registerUser', {name: this.name, password: this.password})
+                        this.login(this.name)
+                        this.$router.push({ name: 'Account' })
                     }
                     else {
                         this.errors = this.checkUserExists('name', this.name)
                         if (this.errors.formIsValid) {
                             this.addUser({name: this.name, password: this.password})
-                            this.$emit('registerUser', {name: this.name, password: this.password})
+                            this.login(this.name)
+                            this.$router.push({ name: 'Account' })
                         }
                     }
                 }
