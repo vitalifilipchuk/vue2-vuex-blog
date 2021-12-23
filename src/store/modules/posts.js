@@ -17,12 +17,19 @@ const mutations = {
     },
     setPosts: (state, posts) => {
         state.posts = posts
+    },
+    deletePost: (state, id) => {
+        let postIndex = state.posts.findIndex(post => post.id === id)
+        state.posts.splice(postIndex, 1)
     }
 }
 
 const actions = {
     addPost({commit}, post) {
         commit("addNewPost", post)
+    },
+    deletePost({commit}, id) {
+        commit("deletePost", id)
     }
 }
 

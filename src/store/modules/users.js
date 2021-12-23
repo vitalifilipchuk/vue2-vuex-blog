@@ -51,6 +51,12 @@ const actions = {
     logout({commit}) {
         usersAPI.unsetCurrentUser()
         commit('logoutUser')
+    },
+    fetchLoggedUser({commit}) {
+        const response = usersAPI.getCurrentUser()
+        if (response) {
+            commit('loginUser', response)
+        }
     }
 }
 
