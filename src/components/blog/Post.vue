@@ -1,6 +1,12 @@
 <template>
     <div class="post">
-
+        <div 
+            class="post__delete" 
+            @click="deletePost"
+            v-if="post.author === getCurrentUser"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none"><rect y="11.678" width="16" height="2" rx="1" transform="rotate(-45 0 11.678)" fill="red"></rect><rect x="1.414" width="16" height="2" rx="1" transform="rotate(45 1.414 0)" fill="red"></rect></svg>
+        </div>
         <div class="post__date">{{post.date}}</div>
         <div class="post__author">by <strong>{{post.author}}</strong></div>
         <div class="post__topic">{{post.topic}}</div>
@@ -19,12 +25,18 @@
 </template>
 
 <script>
+
 export default {
     name: 'Post',
     props: {
         post: {
             type: Object,
             default: () => {}
+        }
+    },
+    methods: {
+        deletePost() {
+            if (this.post.author === this.getCurrentUser) this.$store.dispatch('posts/deletePost', this.id)
         }
     }
 }
@@ -39,6 +51,16 @@ export default {
     border: 1px solid #c3c3c3;
     box-shadow: 0 2px 20px rgb(0 114 162 / 7%);
     margin-bottom: 10px;
+    position: relative;
+}
+
+.post__delete {
+    position: absolute;
+    font-size: 0;
+    padding: 8px;
+    top: 0;
+    right: 0;
+    cursor: pointer;
 }
 
 .post__date {

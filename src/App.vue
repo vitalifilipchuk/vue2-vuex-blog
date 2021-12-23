@@ -34,6 +34,7 @@ export default {
 
   mounted() {
     this.getAllUsers()
+    this.fetchLoggedUser()
   },
 
   methods: {

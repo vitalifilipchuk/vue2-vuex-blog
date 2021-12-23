@@ -10,6 +10,10 @@ export default {
         users.push({name: user.name, password: user.password})
         localStorage.setItem('users',JSON.stringify(users))
     },
+    getCurrentUser() {
+        let currentUser = localStorage.getItem("currentLoggedUser")
+        return currentUser ? currentUser : ''
+    },
     setCurrentUser(username) {
         localStorage.setItem('currentLoggedUser', username)
         return username

@@ -128,7 +128,7 @@ import { mapActions } from 'vuex'
                     topic: this.selectedTopic,
                     text: this.post.text,
                     tags: this.post.tags,
-                    author: 'placeholder',
+                    author: this.getCurrentUser,
                     date: currentDate.getDate() + '-' + (currentDate.getMonth()+1) + '-' + currentDate.getFullYear()
                 }
                 

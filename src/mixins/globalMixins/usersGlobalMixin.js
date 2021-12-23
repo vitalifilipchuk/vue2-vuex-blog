@@ -14,6 +14,9 @@ const usersGlobalMixin = {
         logoutUser() {
             this.$store.dispatch('users/logout')
             this.$router.push({ name: 'Home' })
+        },
+        fetchLoggedUser() {
+            this.$store.dispatch('users/fetchLoggedUser')
         }
     }
 }
