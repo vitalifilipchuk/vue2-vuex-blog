@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>Додати нову статтю</h2>
+        <h2>Редагувати статтю id:{{post.id}}</h2>
         <form 
             class="form"
             @submit.prevent="submitHandler" 
@@ -48,7 +48,7 @@
             <div class="form__controls">
                 <Button
                     class="confirm-btn"
-                    :text="'Додати статтю'"
+                    :text="'Зберегти зміни'"
                 />
             </div>
         </form>
@@ -60,21 +60,18 @@ import Button from '../../components/Button'
 import { mapActions } from 'vuex'
 
     export default {
-        name: 'addPostForm',
+        name: 'editPostForm',
         components: {
             Button
         },
+        props: {
+            post: {
+                type: Object,
+                default: () => {}
+            }
+        },
         data() {
             return {
-                post: {
-                    id: 1,
-                    title: '',
-                    topic: '',
-                    text: '',
-                    tags: [],
-                    author: '',
-                    date: ''
-                },
                 topicOptions: [
                     {                
                         text: 'Загальна',
@@ -89,7 +86,7 @@ import { mapActions } from 'vuex'
                         value: 'Фільми'
                     }
                 ],
-                selectedTopic: 'Загальна',
+                selectedTopic: '',
                 tagOptions: [
                     {
                         text: 'Враження',
@@ -110,29 +107,27 @@ import { mapActions } from 'vuex'
                 ]
             }
         },
-        computed: {
-            getPostsList() {
-                return this.$store.getters['posts/postsList']
-            }
+        created() {
+            this.selectedTopic = this.post.topic
         },
         methods: {
             ...mapActions(
                 'posts',
-                ['addPost']
+                ['editPost']
             ),
             submitHandler() {
-                let currentDate = new Date()
-                const newPost = {
-                    id: Math.ceil(Math.random()*1000000),
+
+                const editedPost = {
+                    id: this.post.id,
                     title: this.post.title,
                     topic: this.selectedTopic,
                     text: this.post.text,
                     tags: this.post.tags,
-                    author: this.getCurrentUser,
-                    date: currentDate.getDate() + '-' + (currentDate.getMonth()+1) + '-' + currentDate.getFullYear()
+                    author: this.post.author,
+                    date: this.post.date
                 }
                 
-                this.addPost(newPost)
+                this.editPost(editedPost)
                 this.$router.push({ name: 'Blog' })
             }
         }

@@ -1,9 +1,7 @@
 <template>
   <div class="login">
     <h1>This is a login page</h1>
-    <LoginForm 
-      @loginUser="name => this.$emit('loginUser', name)" 
-    />
+    <LoginForm />
   </div>
 </template>
 

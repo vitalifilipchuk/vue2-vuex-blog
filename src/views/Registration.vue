@@ -2,9 +2,7 @@
   <div class="container">
     <div class="registration">
       <h1>Registration Form</h1>
-      <RegistrationForm 
-        @registerUser="user => this.$emit('registerUser', user)" 
-      />
+      <RegistrationForm />
     </div>
   </div>
 </template>

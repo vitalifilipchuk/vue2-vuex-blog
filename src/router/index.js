@@ -47,6 +47,14 @@ const routes = [
     }
   },
   {
+    path: '/blog/edit/:postId',
+    name: 'Edit post',
+    component: () => import('../views/blog/editPost.vue'),
+    meta: {
+      middleware: [auth, postExists]
+    }
+  },
+  {
     path: '/account',
     name: 'Account',
     component: () => import('../views/MyAccount.vue'),
