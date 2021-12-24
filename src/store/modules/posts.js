@@ -21,6 +21,13 @@ const mutations = {
     deletePost: (state, id) => {
         let postIndex = state.posts.findIndex(post => post.id === id)
         state.posts.splice(postIndex, 1)
+    },
+    updatePost: (state, updatedPost) => {
+        state.posts = [
+            ...state.posts.map(post => {
+                return post.id !== updatedPost.id ? post : {...post, ...updatedPost}
+            })
+        ]
     }
 }
 
@@ -30,6 +37,9 @@ const actions = {
     },
     deletePost({commit}, id) {
         commit("deletePost", id)
+    },
+    editPost({commit}, post) {
+        commit("updatePost", post)
     }
 }
 

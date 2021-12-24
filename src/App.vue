@@ -1,13 +1,8 @@
 <template>
   <div id="app">
-    <Header 
-      :isLoggedIn="isLoggedIn"
-      @logoutUser="logoutUser" 
-     />
+    <Header />
     <div class="page__content">
-      <router-view 
-         
-      />
+      <router-view />
     </div>
   </div>
 </template>

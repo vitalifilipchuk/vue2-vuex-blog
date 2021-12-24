@@ -20,7 +20,19 @@
                 {{tag}}
             </li>
         </ul>
-        <router-link class="post__edit" :to="{ name: 'Post', params: { postId: post.id }}">Переглянути</router-link>
+        <router-link 
+            class="post__view" 
+            :to="{ name: 'Post', params: { postId: post.id }}"
+        >
+        Переглянути
+        </router-link>
+        <router-link 
+            class="post__edit" 
+            :to="{ name: 'Edit post', params: { postId: post.id }}" 
+            v-if="post.author === getCurrentUser"
+        >
+        Редагувати
+        </router-link>
     </div>
 </template>
 
@@ -123,5 +135,17 @@ export default {
     border-radius: 8px;
     background-color: #FF7F50;
     color: #ffffff;
+}
+.post__view {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    background-color: #00a1e4;
+    color: #ffffff;
+    margin-right: 10px;
 }
 </style>

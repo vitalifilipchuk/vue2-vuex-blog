@@ -25,7 +25,6 @@
         <Modal 
           :popupActive="popupActive" 
           @closePopup="closePopup" 
-          @registerUser="user => this.$emit('registerUser', user)" 
         >
           <div 
               class="popup__close" 
@@ -35,9 +34,7 @@
           </div>
           <div class="popup__content">
               <h2>Register User</h2>
-              <RegistrationForm 
-                  @registerUser="user => this.$emit('registerUser', user)" 
-              />
+              <RegistrationForm/>
           </div>
         </Modal>
       </div>
