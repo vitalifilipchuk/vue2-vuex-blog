@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <Header />
-    <div class="page__content">
-      <router-view />
-    </div>
+    <component :is="layout">
+      <Header />
+      <div class="page__content">
+        <router-view />
+      </div>
+    </component>
   </div>
 </template>
 
@@ -20,13 +22,16 @@ export default {
   components: {
     Header
   },
-
   data() {
     return {
 
     }
   },
-
+  computed: {
+    layout() {
+      return this.$route.meta.layout || 'default-layout'
+    }
+  },
   mounted() {
     this.getAllUsers()
     this.fetchLoggedUser()
@@ -44,6 +49,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+body {
+  margin: 0;
 }
 
 * {

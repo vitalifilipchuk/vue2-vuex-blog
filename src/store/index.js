@@ -11,10 +11,17 @@ const store = new Vuex.Store({
         posts
     },
     state: {
-    },
-    getters: {
+        layout: 'default-layout'
     },
     mutations: {
+        setLayout(state, payload) {
+            state.layout = payload
+        }
+    },
+    getters: {
+        layout(state) {
+            return state.layout
+        }
     }
 })
 

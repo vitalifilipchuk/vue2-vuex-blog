@@ -46,6 +46,11 @@ const getters = {
             return (post.title.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1)
         })
     },
+    postsByTags: (state) => (tags) => {
+        return state.posts.filter(post => {
+            return post.tags.some(postTag => tags.indexOf(postTag) !== -1)
+        })
+    },
     getTagOptions: (state) => {
         return state.tagOptions
     },

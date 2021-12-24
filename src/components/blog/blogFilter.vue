@@ -7,6 +7,19 @@
             class="filter__input"
             @input="searchByName"
         >
+        <div class="filter__tags">
+            <label 
+                v-for="option in tagOptions"
+            >
+                <input 
+                    type="checkbox" 
+                    :value="option.value"
+                    v-model="selectedTags"
+                    @change="searchByTags"
+                >
+                {{ option.text }}
+            </label>
+        </div>
     </div>
 </template>
 
@@ -17,6 +30,7 @@ export default {
         return {
             searchField: '',
             tagOptions: [],
+            selectedTags: []
         }
     },
     created() {
@@ -27,12 +41,20 @@ export default {
             let newQuery = {...this.$route.query, searchName: this.searchField}
             this.$router.replace({path: this.$route.path, query: newQuery})
             this.$emit('triggerSearch')
+        },
+        searchByTags() {
+            let newQuery = {...this.$route.query, searchTags: this.selectedTags.join(',')}
+            this.$router.replace({path: this.$route.path, query: newQuery})
+            this.$emit('triggerSearch')
         }
     }
 }
 </script>
 
 <style>
+    .filter {
+        margin-bottom: 20px;
+    }
     .filter__input {
         width: 100%;
         background: #fefefe;
