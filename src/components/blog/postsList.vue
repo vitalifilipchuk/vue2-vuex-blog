@@ -53,10 +53,24 @@ export default {
     },
     methods: {
         paginatePosts(pageNum) {
-            let postsByName = []
-            if (this.$route.query.searchName) {
-                this.posts = this.$route.query.searchName.length > 2 ? this.$store.getters['posts/postsByName'](this.$route.query.searchName) : this.$store.getters['posts/postsList']
+            let filteredResults = []
+            if (this.$route.query.searchName && (this.$route.query.searchName.length > 2)) {
+                let postsByName = this.$store.getters['posts/postsByName'](this.$route.query.searchName)
+                if (postsByName.length) filteredResults.push(postsByName)
             }
+            if (this.$route.query.searchTags) {
+                let searchTagsArray = this.$route.query.searchTags.split(',')
+                let postsByTags = this.$store.getters['posts/postsByTags'](searchTagsArray)
+                if (postsByTags.length) filteredResults.push(postsByTags)
+            }
+
+            if (filteredResults.length) {
+                this.posts = filteredResults.length > 1 ? filteredResults.reduce((a, b) => a.filter(c => b.includes(c))) : filteredResults[0]
+            }
+            else {
+                this.posts = this.$store.getters['posts/postsList']
+            }
+
             let queryPage = this.$route.query.page ? this.$route.query.page : '1'
             if (pageNum && (pageNum != queryPage)) {
                 let newQuery = {...this.$route.query, page: pageNum}
