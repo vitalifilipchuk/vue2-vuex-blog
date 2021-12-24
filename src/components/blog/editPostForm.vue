@@ -72,42 +72,14 @@ import { mapActions } from 'vuex'
         },
         data() {
             return {
-                topicOptions: [
-                    {                
-                        text: 'Загальна',
-                        value: 'Загальна'
-                    },
-                    {                
-                        text: 'Книги',
-                        value: 'Книги'
-                    },
-                    {                
-                        text: 'Фільми',
-                        value: 'Фільми'
-                    }
-                ],
+                topicOptions: [],
                 selectedTopic: '',
-                tagOptions: [
-                    {
-                        text: 'Враження',
-                        value: 'Враження'
-                    },
-                    {
-                        text: 'Подорожі',
-                        value: 'Подорожі'
-                    },
-                    {
-                        text: 'Поради',
-                        value: 'Поради'
-                    },
-                    {
-                        text: 'SEO оптимізація',
-                        value: 'SEO оптимізація'
-                    },
-                ]
+                tagOptions: []
             }
         },
         created() {
+            this.tagOptions = this.$store.getters['posts/getTagOptions']
+            this.topicOptions = this.$store.getters['posts/getTopicOptions']
             this.selectedTopic = this.post.topic
         },
         methods: {

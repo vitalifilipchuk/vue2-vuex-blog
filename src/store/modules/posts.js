@@ -1,5 +1,37 @@
 const state = {
-    posts: []
+    posts: [],
+    topicOptions: [
+        {                
+            text: 'Загальна',
+            value: 'Загальна'
+        },
+        {                
+            text: 'Книги',
+            value: 'Книги'
+        },
+        {                
+            text: 'Фільми',
+            value: 'Фільми'
+        }
+    ],
+    tagOptions: [
+        {
+            text: 'Враження',
+            value: 'Враження'
+        },
+        {
+            text: 'Подорожі',
+            value: 'Подорожі'
+        },
+        {
+            text: 'Поради',
+            value: 'Поради'
+        },
+        {
+            text: 'SEO оптимізація',
+            value: 'SEO оптимізація'
+        },
+    ]
 }
  
 const getters = {
@@ -8,6 +40,17 @@ const getters = {
     },
     postById: (state) => (postId) => {
         return state.posts.find(post => post.id === postId)
+    },
+    postsByName: (state) => (searchQuery) => {
+        return state.posts.filter(post => {
+            return (post.title.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1)
+        })
+    },
+    getTagOptions: (state) => {
+        return state.tagOptions
+    },
+    getTopicOptions: (state) => {
+        return state.topicOptions
     }
 }
 

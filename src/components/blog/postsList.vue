@@ -1,5 +1,8 @@
 <template>
     <div class="blog__list">
+        <blogFilter
+            @triggerSearch="paginatePosts"
+         />
         <template v-for="post in paginatedItems">
             <Post :post="post"></Post>
         </template>
@@ -15,25 +18,24 @@
 
 <script>
 import Post from './Post.vue'
+import blogFilter from './blogFilter.vue'
 import Pagination from '@/components/Pagination'
-import { mapState } from 'vuex'
 
 export default {
     name: 'postsList',
     components: {
         Post,
-        Pagination
+        Pagination,
+        blogFilter
     },
     data() {
         return {
             itemsPerPage: 5,
-            currentPage: 1
+            currentPage: 1,
+            posts: []
         }
     },
     computed: {
-        ...mapState(
-            'posts', ['posts']
-        ),
         pageCount() {
             let listItems = this.posts.length
             return Math.ceil(listItems/this.itemsPerPage)
@@ -46,13 +48,17 @@ export default {
         }
     },
     created() {
-        console.log(this.pageCount)
-        console.log(this.paginatedItems)
+        // console.log(this.$store.getters['posts/postsList'])
+        this.posts = this.$store.getters['posts/postsList']
     },
     methods: {
         paginatePosts(pageNum) {
+            let postsByName = []
+            if (this.$route.query.searchName) {
+                this.posts = this.$route.query.searchName.length > 2 ? this.$store.getters['posts/postsByName'](this.$route.query.searchName) : this.$store.getters['posts/postsList']
+            }
             let queryPage = this.$route.query.page ? this.$route.query.page : '1'
-            if (pageNum != queryPage) {
+            if (pageNum && (pageNum != queryPage)) {
                 let newQuery = {...this.$route.query, page: pageNum}
                 this.$router.push({path: this.$route.path, query: newQuery})
                 this.currentPage = pageNum
