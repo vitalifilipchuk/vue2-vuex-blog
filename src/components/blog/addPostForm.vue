@@ -75,45 +75,19 @@ import { mapActions } from 'vuex'
                     author: '',
                     date: ''
                 },
-                topicOptions: [
-                    {                
-                        text: 'Загальна',
-                        value: 'Загальна'
-                    },
-                    {                
-                        text: 'Книги',
-                        value: 'Книги'
-                    },
-                    {                
-                        text: 'Фільми',
-                        value: 'Фільми'
-                    }
-                ],
+                topicOptions: [],
                 selectedTopic: 'Загальна',
-                tagOptions: [
-                    {
-                        text: 'Враження',
-                        value: 'Враження'
-                    },
-                    {
-                        text: 'Подорожі',
-                        value: 'Подорожі'
-                    },
-                    {
-                        text: 'Поради',
-                        value: 'Поради'
-                    },
-                    {
-                        text: 'SEO оптимізація',
-                        value: 'SEO оптимізація'
-                    },
-                ]
+                tagOptions: []
             }
         },
         computed: {
             getPostsList() {
                 return this.$store.getters['posts/postsList']
             }
+        },
+        created() {
+            this.tagOptions = this.$store.getters['posts/getTagOptions']
+            this.topicOptions = this.$store.getters['posts/getTopicOptions']
         },
         methods: {
             ...mapActions(
