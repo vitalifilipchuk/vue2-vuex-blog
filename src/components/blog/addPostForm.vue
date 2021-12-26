@@ -103,7 +103,7 @@ import { mapActions } from 'vuex'
                     text: this.post.text,
                     tags: this.post.tags,
                     author: this.getCurrentUser,
-                    date: currentDate.getDate() + '-' + (currentDate.getMonth()+1) + '-' + currentDate.getFullYear()
+                    date: currentDate.getFullYear() + '-' + (currentDate.getMonth()+1) + '-' + currentDate.getDate()
                 }
                 
                 this.addPost(newPost)

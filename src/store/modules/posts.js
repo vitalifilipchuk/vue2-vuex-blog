@@ -1,5 +1,52 @@
 const state = {
-    posts: [],
+    posts: [
+        {
+            id: 1,
+            author: "dummyuser1",
+            date: "2021-12-24",
+            tags: [
+                "Подорожі"
+            ],
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            title: "Test title 1",
+            topic: "Фільми"
+        },
+        {
+            id: 2,
+            author: "dummyuser1",
+            date: "2021-12-24",
+            tags: [
+                "Подорожі"
+            ],
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            title: "Test title 2",
+            topic: "Фільми"
+        },
+        {
+            id: 3,
+            author: "dummyuser2",
+            date: "2021-12-25",
+            tags: [
+                'Поради',
+                'SEO оптимізація'
+            ],
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            title: "Te11st title 1",
+            topic: "Загальна"
+        },
+        {
+            id: 4,
+            author: "dummyuser2",
+            date: "2021-12-25",
+            tags: [
+                'Поради',
+                'SEO оптимізація'
+            ],
+            text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            title: "Tiiiitle",
+            topic: "Загальна"
+        }
+    ],
     topicOptions: [
         {                
             text: 'Загальна',
@@ -51,6 +98,14 @@ const getters = {
             return post.tags.some(postTag => tags.indexOf(postTag) !== -1)
         })
     },
+    postsInDateRange: (state) => (from, to) => {
+        return state.posts.filter(post => {
+            let dateFrom = new Date(from)
+            let dateTo = new Date(to)
+            let postDate = new Date(post.date)
+            return (dateFrom <= postDate) && (postDate <= dateTo)
+        })
+    },
     getTagOptions: (state) => {
         return state.tagOptions
     },
@@ -61,6 +116,7 @@ const getters = {
 
 const mutations = {
     addNewPost: (state, post) => {
+        console.log(post)
         state.posts.push(post)
     },
     setPosts: (state, posts) => {

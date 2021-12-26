@@ -54,14 +54,21 @@ export default {
     methods: {
         paginatePosts(pageNum) {
             let filteredResults = []
+
             if (this.$route.query.searchName && (this.$route.query.searchName.length > 2)) {
                 let postsByName = this.$store.getters['posts/postsByName'](this.$route.query.searchName)
-                if (postsByName.length) filteredResults.push(postsByName)
+                filteredResults.push(postsByName)
             }
+
             if (this.$route.query.searchTags) {
                 let searchTagsArray = this.$route.query.searchTags.split(',')
                 let postsByTags = this.$store.getters['posts/postsByTags'](searchTagsArray)
-                if (postsByTags.length) filteredResults.push(postsByTags)
+                filteredResults.push(postsByTags)
+            }
+
+            if (this.$route.query.dateFrom && this.$route.query.dateTo) {
+                let postsByDate = this.$store.getters['posts/postsInDateRange'](this.$route.query.dateFrom, this.$route.query.dateTo)
+                filteredResults.push(postsByDate)
             }
 
             if (filteredResults.length) {
