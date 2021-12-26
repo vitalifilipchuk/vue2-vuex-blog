@@ -20,21 +20,64 @@
                 {{ option.text }}
             </label>
         </div>
+        <div class="filter__dates">
+            <div class="filter__date">
+                <input 
+                    class="date__input"
+                    type="date"
+                    :min="minDate"
+                    :max="timeTo"
+                    v-model="timeFrom"
+                >
+            </div>
+            <div class="filter__date">
+                <input 
+                    class="date__input"
+                    type="date"
+                    v-model="timeTo"
+                    :min="timeFrom"
+                    :max="maxDate"
+                >
+            </div>
+            <Button
+                text="Пошук по даті"
+                @click.native="searchByDate(timeFrom, timeTo)"
+             />
+        </div>
     </div>
 </template>
 
 <script>
+import Button from '@/components/Button'
+
 export default {
     name: 'blogFilter',
+    components: {
+        Button
+    },
     data() {
         return {
             searchField: '',
             tagOptions: [],
-            selectedTags: []
+            selectedTags: [],
+            timeFrom: '2021-12-01',
+            timeTo: '',
+            maxDate: '',
+            minDate: '2021-12-01'
         }
     },
     created() {
         this.tagOptions = this.$store.getters['posts/getTagOptions']
+        let today = new Date(),
+            dd = today.getDate(),
+            mm = today.getMonth() + 1,
+            yyyy = today.getFullYear()
+
+        if (dd < 10) dd = '0' + dd
+        if (mm < 10) mm = '0' + mm
+
+        this.maxDate = yyyy + '-' + mm + '-' + dd
+        this.timeTo = yyyy + '-' + mm + '-' + dd
     },
     methods: {
         searchByName() {
@@ -44,6 +87,11 @@ export default {
         },
         searchByTags() {
             let newQuery = {...this.$route.query, searchTags: this.selectedTags.join(',')}
+            this.$router.replace({path: this.$route.path, query: newQuery})
+            this.$emit('triggerSearch')
+        },
+        searchByDate(from, to) {
+            let newQuery = {...this.$route.query, dateFrom: from, dateTo: to}
             this.$router.replace({path: this.$route.path, query: newQuery})
             this.$emit('triggerSearch')
         }
@@ -72,5 +120,19 @@ export default {
         text-align: center;
         font-size: 20px;
         margin-bottom: 20px;
+    }
+
+    .filter__dates {
+        padding: 20px 0;
+    }
+
+    .filter__date {
+        width: 50%;
+        display: inline-block;
+        margin-bottom: 15px;
+    }
+
+    .filter__date input {
+        width: calc(100% - 30px);
     }
 </style>
