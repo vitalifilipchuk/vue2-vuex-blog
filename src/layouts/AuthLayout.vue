@@ -13,5 +13,6 @@ export default {
 <style scoped>
 .auth-wrapper {
     background-color: 	#FAEBD7;
+    min-height: 100vh;
 }
 </style>
